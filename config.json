@@ -1,0 +1,16 @@
+{
+  "_comment": "Edit this file when you install the bullet-journal skill. These are the only knobs you need to set. Nothing personal or deployment-specific should live in SKILL.md.",
+
+  "storage": {
+    "type": "notion",
+    "location": "Notion database titled 'Bullet Journal'",
+    "notes": "Columns: Date (date), Entry (text), Tags (multi-select). Use the Notion connector to create one row per entry. To use a different backend, change 'type' (e.g. 'file') and 'location' (e.g. an absolute path to a markdown file) and update these notes."
+  },
+
+  "tags": ["work", "luck", "ideas", "family", "admin", "learning"],
+
+  "tagging": {
+    "suggest_count": 2,
+    "allow_new_tags": false
+  }
+}

@@ -23,7 +23,7 @@ is generic, so the same skill works for anyone who installs it.
 When you type something like `note: shipped the redesign #work`, Claude:
 
 1. Reads `config.json` for your storage destination and tag list.
-2. Strips the trigger prefix (`note:`, `BJ:`, etc.) to get the entry text.
+2. Strips the trigger prefix (`note:`, `bullet:`, etc.) to get the entry text.
 3. Stamps it with today's date (`YYYY-MM-DD`).
 4. Resolves tags — uses the ones you supply, or suggests up to
    `suggest_count` from your configured list when you supply none.
@@ -31,7 +31,7 @@ When you type something like `note: shipped the redesign #work`, Claude:
 6. Confirms what it stored.
 
 Trigger phrases include: `journal this`, `log this`, `note this down`,
-`jot this`, and the prefixes `note:`, `read:`, `BJ:`.
+`jot this`, and the prefixes `note:`, `read:`, `bullet:`.
 
 ## Setup
 
@@ -117,7 +117,7 @@ note: shipped the onboarding revamp, big relief #work
 tag `work` (supplied).
 
 ```
-BJ: found a pound coin on the pavement today
+bullet: found a pound coin on the pavement today
 ```
 → Date `2026-06-17`, entry `found a pound coin on the pavement today`,
 tag `luck` (suggested from your list).

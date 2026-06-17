@@ -1,6 +1,6 @@
 ---
 name: bullet-journal
-description: Records a sentence or short paragraph as a dated bullet journal entry in a central store. Use whenever the user wants to log, journal, note, jot, capture, or record a quick thought, observation, win, idea, or luck event — including phrases and prefixes like "journal this", "log this", "add a journal entry", "note this down", "jot this", "note:", "read:", "BJ:", or "bullet journal". Applies any tags the user supplies; if none are given, suggests tags from the configured list.
+description: Records a sentence or short paragraph as a dated bullet journal entry in a central store. Use whenever the user wants to log, journal, note, jot, capture, or record a quick thought, observation, win, idea, or luck event — including phrases and prefixes like "journal this", "log this", "add a journal entry", "note this down", "jot this", "note:", "read:", "bullet:", or "bullet journal". Applies any tags the user supplies; if none are given, suggests tags from the configured list.
 ---
 
 # Bullet Journal Skill
@@ -36,7 +36,7 @@ When this skill fires, follow these steps in order:
    destination.
 
 2. **Extract the entry text.** Take the user's sentence/paragraph. Strip any
-   trigger prefix (`note:`, `read:`, `BJ:`, "journal this", "log this", etc.)
+   trigger prefix (`note:`, `read:`, `bullet:`, "journal this", "log this", etc.)
    and any inline tags (see step 4). What remains is the entry body, verbatim
    — do not rewrite, summarise, or "improve" the user's words.
 
@@ -77,7 +77,7 @@ User: `note: shipped the onboarding revamp, big relief #work`
 - Tags: `work` (supplied, in list)
 - Action: add one row to the configured store; confirm to the user.
 
-User: `BJ: bumped into an old colleague who offered to refer me`  *(no tags)*
+User: `bullet: bumped into an old colleague who offered to refer me`  *(no tags)*
 
 - Date: `2026-06-17`
 - Entry: `bumped into an old colleague who offered to refer me`

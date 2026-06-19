@@ -51,12 +51,16 @@ Notion database or a local file also work.
    settings → Integrations). This is required: the connector can only see
    and post to channels it is a member of, so a freshly created channel
    won't be reachable until you add the app.
-3. In `config.json` set:
+3. Get the channel **ID** (not the `#name`): open the channel → click its
+   name → bottom of the **About** tab → copy the **Channel ID** (starts
+   with `C`). It's also in the URL after `/archives/`. The Slack connector
+   resolves channels by ID, not by name.
+4. In `config.json` set:
    ```json
    "storage": {
      "type": "slack",
-     "location": "#bullet-journal",
-     "notes": "Post one message per entry via the Slack connector, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'."
+     "location": "C0XXXXXXXXX",
+     "notes": "Channel C0XXXXXXXXX is #bullet-journal. Post one message per entry via the Slack connector, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'. Use the channel ID, not the #name."
    }
    ```
 
@@ -100,8 +104,8 @@ This is the only file you edit. Example:
 {
   "storage": {
     "type": "slack",
-    "location": "#bullet-journal",
-    "notes": "Post one message per entry via the Slack connector, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'."
+    "location": "C0XXXXXXXXX",
+    "notes": "Channel C0XXXXXXXXX is #bullet-journal. Post one message per entry via the Slack connector, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'. Use the channel ID, not the #name."
   },
   "tags": ["work", "luck", "ideas", "family", "admin", "learning"],
   "tagging": {
@@ -118,7 +122,7 @@ switch backends.
 | Setting | Meaning |
 |---------|---------|
 | `storage.type` | `slack`, `notion`, `file`, or another backend you describe in `notes`. |
-| `storage.location` | Where entries go (Slack channel, Notion DB title, or a file path). |
+| `storage.location` | Where entries go (Slack channel **ID**, Notion DB title, or a file path). |
 | `storage.notes` | Free-text instructions telling Claude how to write an entry. |
 | `tags` | Your tag list — the menu the skill suggests from. |
 | `tagging.suggest_count` | **Maximum** tags to suggest when you give none. Fewer is fine; the skill never pads with weak tags. |

@@ -16,8 +16,8 @@
 
   "storage": {
     "type": "slack",
-    "location": "#bullet-journal",
-    "notes": "Post one message per entry to the channel in 'location' via the Slack connector, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'. For a running document instead of a feed, append to a Slack Canvas titled 'Bullet Journal'. Writable from Slack on mobile, web, and desktop."
+    "location": "C0XXXXXXXXX",
+    "notes": "Channel ID for your journal channel (e.g. #bullet-journal). The Slack connector resolves channels by ID, not by #name — find it in the channel's About tab or its URL after /archives/. Post one message per entry, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'. For a running document instead of a feed, append to a Slack Canvas. The Claude Slack app must be a member of the channel. Writable from Slack on mobile, web, and desktop."
   },
 
   "tags": ["work", "luck", "ideas", "family", "admin", "learning"],

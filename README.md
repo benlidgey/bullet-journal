@@ -56,12 +56,33 @@ also works for single-machine use.
 5. Connect Notion to Claude: enable the **Notion connector** in Claude, and
    share the **Bullet Journal** database with it so Claude can add rows.
 
-#### Option B — Local file (single machine)
+#### Option B — Slack (cross-device, append-native)
 
-Skip Notion. In `config.json` set `storage.type` to `"file"` and
+Use a dedicated Slack channel (e.g. `#bullet-journal`) or a Slack Canvas
+titled "Bullet Journal". In `config.json` set:
+
+```json
+"storage": {
+  "type": "slack",
+  "location": "#bullet-journal channel (or a Slack Canvas titled 'Bullet Journal')",
+  "notes": "Post one message per entry via the Slack connector, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'. For a running document instead of a feed, append to a Slack Canvas."
+}
+```
+
+Connect the **Slack connector** in Claude. Entries post from Slack on
+mobile, web, and desktop, with strong built-in search. A channel gives you
+a timeline feed; a Canvas gives you one running document.
+
+> Note: writing to a **Google Sheet** is not currently supported — the
+> Google connector can read Sheets but has no append/edit-row capability.
+> Use Notion, Slack, or a file until a Sheets-writable connector is available.
+
+#### Option C — Local file (single machine)
+
+Skip the cloud. In `config.json` set `storage.type` to `"file"` and
 `storage.location` to an absolute path, e.g.
 `"/Users/you/journal.md"`. The skill appends one line per entry:
-`- YYYY-MM-DD [tag1, tag2] entry text`.
+`- YYYY-MM-DD [tag1, tag2] entry text`. Single machine only — not synced.
 
 ### 2. Configure `config.json`
 
@@ -124,6 +145,10 @@ tag `luck` (suggested from your list).
 
 ## Roadmap
 
-Iteration 1 handles **text entries only**. A future iteration will use the
-`read:` prefix and the skill's folder layout to let an entry carry an
-attachment (e.g. "read this PDF" plus the PDF stored alongside the entry).
+Iteration 1 handles **text entries only**. Planned next:
+
+- **Reporting** — extract entries from the store and generate a monthly
+  report or blog post from them.
+- **Attachments** — use the `read:` prefix and the skill's folder layout to
+  let an entry carry a file (e.g. "read this PDF" plus the PDF stored
+  alongside the entry).

@@ -1,10 +1,23 @@
 {
-  "_comment": "Edit this file when you install the bullet-journal skill. These are the only knobs you need to set. Nothing personal or deployment-specific should live in SKILL.md.",
+  "_comment": "Edit this file when you install the bullet-journal skill. These are the only knobs you need to set. Nothing personal or deployment-specific should live in SKILL.md. Set the active 'storage' block to one backend; '_storage_examples' shows other backends you could copy into 'storage'.",
+
+  "_storage_examples": {
+    "slack": {
+      "type": "slack",
+      "location": "#bullet-journal channel (or a Slack Canvas titled 'Bullet Journal')",
+      "notes": "Post one message per entry via the Slack connector, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'. For a running document instead of a feed, append to a Slack Canvas. Writable from Slack on mobile, web, and desktop."
+    },
+    "file": {
+      "type": "file",
+      "location": "/absolute/path/to/journal.md",
+      "notes": "Append one line per entry: '- YYYY-MM-DD [tag1, tag2] entry text'. Single machine only."
+    }
+  },
 
   "storage": {
     "type": "notion",
     "location": "Notion database titled 'Bullet Journal'",
-    "notes": "Columns: Date (date), Entry (text), Tags (multi-select). Use the Notion connector to create one row per entry. To use a different backend, change 'type' (e.g. 'file') and 'location' (e.g. an absolute path to a markdown file) and update these notes."
+    "notes": "Columns: Date (date), Entry (text), Tags (multi-select). Use the Notion connector to create one row per entry. To use a different backend, copy one of the blocks from '_storage_examples' into 'storage'."
   },
 
   "tags": ["work", "luck", "ideas", "family", "admin", "learning"],

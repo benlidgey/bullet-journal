@@ -63,6 +63,10 @@ When this skill fires, follow these steps in order:
      via the Notion connector (Date, Entry, Tags columns).
    - For `type: "file"`: append a line to the file at `storage.location`,
      e.g. `- YYYY-MM-DD [tag1, tag2] entry text`.
+   - For `type: "slack"`: post one message per entry to the channel or
+     Canvas named in `storage.location` via the Slack connector, e.g.
+     `YYYY-MM-DD — entry text [tag1, tag2]`. For a Canvas, append to it
+     rather than replacing it.
    - For any other `type`: follow `storage.notes`.
 
 6. **Confirm.** Show the user what was stored: the date, the entry text, the

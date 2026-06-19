@@ -70,6 +70,10 @@ can also keep several capture channels (e.g. work vs personal) and point
 different installs at each. (Prefer one running document? Use a Slack
 Canvas titled "Bullet Journal" and append to it instead.)
 
+Tags are written as plain bracketed text, e.g. `[work, luck]`. Do **not**
+prefix tags with `#` or `@` in Slack — Slack treats those as channel and
+user references, not tags.
+
 #### Option B — Notion database (cross-device)
 
 1. In Notion, create a new page and add a **Table** database (full-page).

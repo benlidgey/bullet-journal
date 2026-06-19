@@ -66,8 +66,10 @@ When this skill fires, follow these steps in order:
    - For `type: "slack"`: post one message per entry via the Slack
      connector, e.g. `YYYY-MM-DD — entry text [tag1, tag2]`. Use the
      channel **ID** held in `storage.location` (the connector resolves
-     channels by ID, not by `#name`). For a Canvas, append to it rather
-     than replacing it.
+     channels by ID, not by `#name`). Write tags as plain bracketed text
+     like `[work, luck]` — do NOT prefix tags with `#` or `@`, which Slack
+     interprets as channel and user references. For a Canvas, append to it
+     rather than replacing it.
    - For any other `type`: follow `storage.notes`.
 
 6. **Confirm.** Show the user what was stored: the date, the entry text, the

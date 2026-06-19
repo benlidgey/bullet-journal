@@ -37,11 +37,33 @@ Trigger phrases include: `journal this`, `log this`, `note this down`,
 
 ### 1. Create your central store
 
-The skill is backend-agnostic. The recommended store is a **Notion
-database**, because it syncs across phone, desktop, and web. A local file
-also works for single-machine use.
+The skill is backend-agnostic. The recommended store is a **Slack channel**:
+you can capture entries straight from Slack on any device or via Claude,
+storage lives in Slack, and you can extract entries later for reporting. A
+Notion database or a local file also work.
 
-#### Option A — Notion database (recommended, cross-device)
+#### Option A — Slack channel (recommended, cross-device)
+
+1. In Slack, create a channel for your journal, e.g. `#bullet-journal`
+   (a private channel is fine).
+2. Connect the **Slack connector** in Claude, and make sure Claude can post
+   to that channel.
+3. In `config.json` set:
+   ```json
+   "storage": {
+     "type": "slack",
+     "location": "#bullet-journal",
+     "notes": "Post one message per entry via the Slack connector, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'."
+   }
+   ```
+
+Entries post from Slack on mobile, web, and desktop, with strong built-in
+search. A channel gives you a timeline feed you can scroll and search; you
+can also keep several capture channels (e.g. work vs personal) and point
+different installs at each. (Prefer one running document? Use a Slack
+Canvas titled "Bullet Journal" and append to it instead.)
+
+#### Option B — Notion database (cross-device)
 
 1. In Notion, create a new page and add a **Table** database (full-page).
 2. Title the database **Bullet Journal**.
@@ -56,33 +78,16 @@ also works for single-machine use.
 5. Connect Notion to Claude: enable the **Notion connector** in Claude, and
    share the **Bullet Journal** database with it so Claude can add rows.
 
-#### Option B — Slack (cross-device, append-native)
-
-Use a dedicated Slack channel (e.g. `#bullet-journal`) or a Slack Canvas
-titled "Bullet Journal". In `config.json` set:
-
-```json
-"storage": {
-  "type": "slack",
-  "location": "#bullet-journal channel (or a Slack Canvas titled 'Bullet Journal')",
-  "notes": "Post one message per entry via the Slack connector, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'. For a running document instead of a feed, append to a Slack Canvas."
-}
-```
-
-Connect the **Slack connector** in Claude. Entries post from Slack on
-mobile, web, and desktop, with strong built-in search. A channel gives you
-a timeline feed; a Canvas gives you one running document.
-
-> Note: writing to a **Google Sheet** is not currently supported — the
-> Google connector can read Sheets but has no append/edit-row capability.
-> Use Notion, Slack, or a file until a Sheets-writable connector is available.
-
 #### Option C — Local file (single machine)
 
 Skip the cloud. In `config.json` set `storage.type` to `"file"` and
 `storage.location` to an absolute path, e.g.
 `"/Users/you/journal.md"`. The skill appends one line per entry:
 `- YYYY-MM-DD [tag1, tag2] entry text`. Single machine only — not synced.
+
+> Note: writing to a **Google Sheet** is not currently supported — the
+> Google connector can read Sheets but has no append/edit-row capability.
+> Use Slack, Notion, or a file until a Sheets-writable connector is available.
 
 ### 2. Configure `config.json`
 
@@ -91,9 +96,9 @@ This is the only file you edit. Example:
 ```json
 {
   "storage": {
-    "type": "notion",
-    "location": "Notion database titled 'Bullet Journal'",
-    "notes": "Columns: Date (date), Entry (text), Tags (multi-select). Use the Notion connector to create one row per entry."
+    "type": "slack",
+    "location": "#bullet-journal",
+    "notes": "Post one message per entry via the Slack connector, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'."
   },
   "tags": ["work", "luck", "ideas", "family", "admin", "learning"],
   "tagging": {
@@ -103,10 +108,14 @@ This is the only file you edit. Example:
 }
 ```
 
+The shipped `config.json` also includes a `_storage_examples` block with
+ready-to-copy `notion` and `file` configs — paste one into `storage` to
+switch backends.
+
 | Setting | Meaning |
 |---------|---------|
-| `storage.type` | `notion`, `file`, or another backend you describe in `notes`. |
-| `storage.location` | Where entries go (Notion DB title, or a file path). |
+| `storage.type` | `slack`, `notion`, `file`, or another backend you describe in `notes`. |
+| `storage.location` | Where entries go (Slack channel, Notion DB title, or a file path). |
 | `storage.notes` | Free-text instructions telling Claude how to write an entry. |
 | `tags` | Your tag list — the menu the skill suggests from. |
 | `tagging.suggest_count` | **Maximum** tags to suggest when you give none. Fewer is fine; the skill never pads with weak tags. |
@@ -121,12 +130,13 @@ you it wasn't in the list, and offers to add it to `config.json`.
   discovered skills directory (e.g. `~/.claude/skills/bullet-journal/`). It
   is picked up automatically.
 - **Desktop / mobile / web (claude.ai):** upload the skill in Claude's skill
-  settings so it travels with your account to every device. Make sure the
-  **Notion connector** is connected on those surfaces too, so Claude can
-  reach your database from your phone and the web app.
+  settings so it travels with your account to every device. Make sure your
+  storage connector (the **Slack connector** for the default setup) is
+  connected on those surfaces too, so Claude can reach your channel from
+  your phone and the web app.
 
 > Cross-device only works if (a) the skill is installed on your account and
-> (b) the store is a cloud backend like Notion. A local-file backend is
+> (b) the store is a cloud backend like Slack or Notion. A local-file backend is
 > single-machine only.
 
 ## Usage examples

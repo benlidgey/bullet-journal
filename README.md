@@ -46,8 +46,11 @@ Notion database or a local file also work.
 
 1. In Slack, create a channel for your journal, e.g. `#bullet-journal`
    (a private channel is fine).
-2. Connect the **Slack connector** in Claude, and make sure Claude can post
-   to that channel.
+2. Connect the **Slack connector** in Claude, then **add the Claude app to
+   the channel** — open the channel and `/invite` it (or via channel
+   settings → Integrations). This is required: the connector can only see
+   and post to channels it is a member of, so a freshly created channel
+   won't be reachable until you add the app.
 3. In `config.json` set:
    ```json
    "storage": {

@@ -138,13 +138,25 @@ you it wasn't in the list, and offers to add it to `config.json`.
 ### 3. Install the skill in Claude
 
 - **Claude Code (this machine):** place the `bullet-journal` folder under a
-  discovered skills directory (e.g. `~/.claude/skills/bullet-journal/`). It
-  is picked up automatically.
-- **Desktop / mobile / web (claude.ai):** upload the skill in Claude's skill
-  settings so it travels with your account to every device. Make sure your
-  storage connector (the **Slack connector** for the default setup) is
-  connected on those surfaces too, so Claude can reach your channel from
-  your phone and the web app.
+  discovered skills directory (e.g. `~/.claude/skills/bullet-journal/`). Keep
+  `SKILL.md` and `config.json` **together** in that folder — the skill reads
+  the config from alongside itself. It is picked up automatically.
+- **Claude desktop / mobile / web:** upload the skill in Claude's skill
+  settings so it travels with your account. Make sure your storage connector
+  (the **Slack connector** for the default setup) is connected on those
+  surfaces too, so Claude can reach your channel.
+
+> ⚠️ **Single-file upload gotcha.** `SKILL.md` and `config.json` are two
+> separate files. If you install by uploading **only `SKILL.md`** (e.g.
+> dragging the single file into the desktop app), `config.json` does **not**
+> come with it, and the skill will report that no config is set. To avoid
+> this, either:
+>
+> 1. **Upload the whole folder / package** so `config.json` travels with
+>    `SKILL.md`, or
+> 2. **Use the self-contained variant** [`SKILL-selfcontained.md`](SKILL-selfcontained.md),
+>    which embeds the config directly in the file (no `config.json` needed) —
+>    edit the `CONFIG` block at the top, then upload that single file.
 
 > Cross-device only works if (a) the skill is installed on your account and
 > (b) the store is a cloud backend like Slack or Notion. A local-file backend is

@@ -130,14 +130,20 @@ built-in default  <  config.json "reporting" block  <  what the user asks for
      parse each `YYYY-MM-DD — text [tags]` message into date, text, tags.
    - `notion`: query rows where Date is in range.
    - `file`: read the file and keep lines whose date is in range.
-5. **Write the AI summary** (skip if `summary` is `false`): a short paragraph
+5. **Filter out non-journal messages.** Keep only real entries; skip system
+   and bot noise (in Slack: channel-join notices, the Claude bot's intro
+   message, "Sent using @Claude" metadata lines).
+6. **Resolve each entry's date.** Use the `YYYY-MM-DD` prefix when present. If
+   there is no prefix, use the message's own date (e.g. the Slack message
+   timestamp). If no date is available at all, use the previous entry's date.
+7. **Write the AI summary** (skip if `summary` is `false`): a short paragraph
    synthesising the period, grouped by tag — themes, not a restatement of
    every entry.
-6. **Assemble the markdown:** the title header, then the summary, then the
+8. **Assemble the markdown:** the title header, then the summary, then the
    entries — a single date-ordered list when `group_by` is `date`, or sections
    under per-tag headings when `group_by` is `tag`. Show or hide tags per
    `show_tags`.
-7. **Output the markdown file** to the resolved output path when a filesystem
+9. **Output the markdown file** to the resolved output path when a filesystem
    is available. Where there is no writable path (e.g. the desktop/web app),
    return the markdown for the user to save. Confirm what was produced and the
    range covered.

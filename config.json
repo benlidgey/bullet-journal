@@ -20,7 +20,7 @@
     "notes": "Channel ID for your journal channel (e.g. #bullet-journal). The Slack connector resolves channels by ID, not by #name — find it in the channel's About tab or its URL after /archives/. Post one message per entry, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'. Write tags as plain bracketed text like [work, luck]; do NOT prefix tags with # or @, which Slack treats as channel and user references. For a running document instead of a feed, append to a Slack Canvas. The Claude Slack app must be a member of the channel. Writable from Slack on mobile, web, and desktop."
   },
 
-  "tags": ["work", "luck", "ideas", "family", "admin", "learning"],
+  "tags": ["work", "luck", "ideas", "family", "admin", "learning", "personal"],
 
   "tagging": {
     "suggest_count": 2,

@@ -24,7 +24,7 @@ Claude desktop app) with no separate `config.json`.
 - **How to write an entry:** Slack → post one message per entry via the
   Slack connector (the Claude Slack app must be a member of the channel).
   Notion → add one row (Date, Entry, Tags). File → append a line.
-- **Tag list:** `work`, `luck`, `ideas`, `family`, `admin`, `learning`
+- **Tag list:** `work`, `luck`, `ideas`, `family`, `admin`, `learning`, `personal`
 - **Suggest count (max):** `2`  *(a maximum, not a quota)*
 - **Allow new tags:** `no`  *(never invent tags; suggest only from the list)*
 
@@ -99,12 +99,17 @@ Procedure:
    messages in range via the connector and parse each
    `YYYY-MM-DD — text [tags]` message into date, text, tags. Notion: query
    rows in range. File: filter lines by date.
-4. Write the AI summary (unless summary is off): a short paragraph grouped by
+4. Filter out non-journal messages — skip system and bot noise (in Slack:
+   channel-join notices, the Claude bot's intro, "Sent using @Claude" lines).
+5. Resolve each entry's date: use the `YYYY-MM-DD` prefix when present; else
+   the message's own date (e.g. the Slack timestamp); else the previous
+   entry's date.
+6. Write the AI summary (unless summary is off): a short paragraph grouped by
    tag — themes, not a restatement of every entry.
-5. Assemble the markdown: title header, summary, then entries as a single
+7. Assemble the markdown: title header, summary, then entries as a single
    date-ordered list (`group_by: date`) or under per-tag headings
    (`group_by: tag`), tags shown per the show-tags setting.
-6. Write the markdown file to the resolved output path when a filesystem is
+8. Write the markdown file to the resolved output path when a filesystem is
    available; otherwise return the markdown for the user to save. Confirm what
    was produced and the range covered.
 

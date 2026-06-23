@@ -85,7 +85,7 @@ user references, not tags.
    | `Date` | Date | The day the entry was recorded. |
    | `Tags` | Multi-select | Add one option per configured tag (see step 2). |
 4. Add the multi-select options to `Tags` so they match your tag list, e.g.
-   `work`, `luck`, `ideas`, `family`, `admin`, `learning`.
+   `work`, `luck`, `ideas`, `family`, `admin`, `learning`, `personal`.
 5. Connect Notion to Claude: enable the **Notion connector** in Claude, and
    share the **Bullet Journal** database with it so Claude can add rows.
 
@@ -111,7 +111,7 @@ This is the only file you edit. Example:
     "location": "C0XXXXXXXXX",
     "notes": "Channel C0XXXXXXXXX is #bullet-journal. Post one message per entry via the Slack connector, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'. Use the channel ID, not the #name."
   },
-  "tags": ["work", "luck", "ideas", "family", "admin", "learning"],
+  "tags": ["work", "luck", "ideas", "family", "admin", "learning", "personal"],
   "tagging": {
     "suggest_count": 2,
     "allow_new_tags": false

@@ -85,7 +85,7 @@ user references, not tags.
    | `Date` | Date | The day the entry was recorded. |
    | `Tags` | Multi-select | Add one option per configured tag (see step 2). |
 4. Add the multi-select options to `Tags` so they match your tag list, e.g.
-   `work`, `luck`, `ideas`, `family`, `admin`, `learning`.
+   `work`, `luck`, `ideas`, `family`, `admin`, `learning`, `personal`.
 5. Connect Notion to Claude: enable the **Notion connector** in Claude, and
    share the **Bullet Journal** database with it so Claude can add rows.
 
@@ -111,7 +111,7 @@ This is the only file you edit. Example:
     "location": "C0XXXXXXXXX",
     "notes": "Channel C0XXXXXXXXX is #bullet-journal. Post one message per entry via the Slack connector, e.g. 'YYYY-MM-DD — entry text [tag1, tag2]'. Use the channel ID, not the #name."
   },
-  "tags": ["work", "luck", "ideas", "family", "admin", "learning"],
+  "tags": ["work", "luck", "ideas", "family", "admin", "learning", "personal"],
   "tagging": {
     "suggest_count": 2,
     "allow_new_tags": false
@@ -176,12 +176,56 @@ bullet: found a pound coin on the pavement today
 → Date `2026-06-17`, entry `found a pound coin on the pavement today`,
 tag `luck` (suggested from your list).
 
+## Reporting
+
+Ask Claude for a report over a period and it builds a markdown summary from
+your stored entries:
+
+```
+monthly report
+report: last month grouped by tag
+summarise my journal for May 2026 as a blog, without tags
+```
+
+Claude reads the entries for the range from your store, writes an
+AI-generated summary grouped by tags, and assembles a markdown file: a header,
+the summary, then your entries (ordered by date, or grouped under tag
+headings).
+
+Defaults live in the `reporting` block of `config.json`; anything you say in
+the request overrides them for that run.
+
+| Option | Default | Override example |
+|--------|---------|------------------|
+| Date range | last complete month | "for May 2026", "1–15 June" |
+| `format` | `report` (structured list) | "as a blog" (prose-forward) |
+| `group_by` | `date` | "grouped by tag" |
+| `show_tags` | shown | "without tags" |
+| `summary` | included | "no summary" |
+| Title / output path | from templates in config | "title it 'June review'", "save to notes/june.md" |
+
+The output is a markdown file: written to `reports/` by default where Claude
+has filesystem access, otherwise returned for you to save.
+
 ## Roadmap
 
-Iteration 1 handles **text entries only**. Planned next:
+Iterations 1 (capture) and 2 (reporting) are built. Planned next:
 
-- **Reporting** — extract entries from the store and generate a monthly
-  report or blog post from them.
+## Iteration 2: Reporting — built (see [Reporting](#reporting))
+
+Extract entries from the store and generate a monthly report or blog post from them.
+  
+* The format for the report or blog should be configurable:
+	* Summary header for the date range
+	* Summary paragraph that is AI-generated for the date range and a summary of the points in the report, grouped by the tags.
+	*  List of the entries ordered by date or grouped by tags
+	* Optionally showing the tags.
+* The report generation should be invoked from Claude to allow AI features
+* It should be able to be invoked from AI such as Claude
+* The output should be a markdown file
+
+## Iteration 3: Attachments
+
 - **Attachments** — use the `read:` prefix and the skill's folder layout to
   let an entry carry a file (e.g. "read this PDF" plus the PDF stored
   alongside the entry).

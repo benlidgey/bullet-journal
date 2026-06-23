@@ -168,7 +168,12 @@ A month mostly about shipping, with a couple of lucky breaks along the way.
 Iteration 1 handles **text entries only**. Iteration 2 adds **reporting**
 (above).
 
-**Future (not yet built):** the `read:` prefix and the folder layout are
-intended to let an entry carry an attachment (e.g. "read this PDF" plus the
-PDF file stored alongside the entry). Do not attempt attachment handling
-until that iteration is built.
+**Future (not yet built):**
+
+- **Attachments** — the `read:` prefix and the folder layout, to let an entry
+  carry a file (e.g. "read this PDF" plus the PDF stored alongside the entry).
+- **Untagged entries in reports** — reporting currently puts untagged entries
+  under an "untagged" heading when grouping by tag. A later change could
+  suggest tags for them (as the capture flow does) rather than bucketing them.
+
+Do not attempt these until they are built.

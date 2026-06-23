@@ -104,12 +104,15 @@ Procedure:
 5. Resolve each entry's date: use the `YYYY-MM-DD` prefix when present; else
    the message's own date (e.g. the Slack timestamp); else the previous
    entry's date.
-6. Write the AI summary (unless summary is off): a short paragraph grouped by
+6. Format entry contents for reading: render bare URLs as markdown links
+   `[text](url)` — use the entry's own wording as the link text when it reads
+   well, else fetch the page title from the URL, else leave the plain URL.
+7. Write the AI summary (unless summary is off): a short paragraph grouped by
    tag — themes, not a restatement of every entry.
-7. Assemble the markdown: title header, summary, then entries as a single
+8. Assemble the markdown: title header, summary, then entries as a single
    date-ordered list (`group_by: date`) or under per-tag headings
    (`group_by: tag`), tags shown per the show-tags setting.
-8. Write the markdown file to the resolved output path when a filesystem is
+9. Write the markdown file to the resolved output path when a filesystem is
    available; otherwise return the markdown for the user to save. Confirm what
    was produced and the range covered.
 

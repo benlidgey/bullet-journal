@@ -136,17 +136,22 @@ built-in default  <  config.json "reporting" block  <  what the user asks for
 6. **Resolve each entry's date.** Use the `YYYY-MM-DD` prefix when present. If
    there is no prefix, use the message's own date (e.g. the Slack message
    timestamp). If no date is available at all, use the previous entry's date.
-7. **Write the AI summary** (skip if `summary` is `false`): a short paragraph
+7. **Format entry contents for reading.** Tidy entries for human reading
+   without changing their meaning. In particular, render a bare URL as a
+   markdown link `[text](url)`: use the entry's own wording as the link text
+   when it reads well, otherwise fetch the page title from the URL; if no
+   title is available, leave the plain URL.
+8. **Write the AI summary** (skip if `summary` is `false`): a short paragraph
    synthesising the period, grouped by tag — themes, not a restatement of
    every entry.
-8. **Assemble the markdown:** the title header, then the summary, then the
+9. **Assemble the markdown:** the title header, then the summary, then the
    entries — a single date-ordered list when `group_by` is `date`, or sections
    under per-tag headings when `group_by` is `tag`. Show or hide tags per
    `show_tags`.
-9. **Output the markdown file** to the resolved output path when a filesystem
-   is available. Where there is no writable path (e.g. the desktop/web app),
-   return the markdown for the user to save. Confirm what was produced and the
-   range covered.
+10. **Output the markdown file** to the resolved output path when a filesystem
+    is available. Where there is no writable path (e.g. the desktop/web app),
+    return the markdown for the user to save. Confirm what was produced and the
+    range covered.
 
 ### Report example (`format: report`, `group_by: tag`)
 

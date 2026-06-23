@@ -180,8 +180,21 @@ tag `luck` (suggested from your list).
 
 Iteration 1 handles **text entries only**. Planned next:
 
-- **Reporting** — extract entries from the store and generate a monthly
-  report or blog post from them.
+## Iteration 2: Reporting
+
+Extract entries from the store and generate a monthly report or blog post from them.
+  
+* The format for the report or blog should be configurable:
+	* Summary header for the date range
+	* Summary paragraph that is AI-generated for the date range and a summary of the points in the report, grouped by the tags.
+	*  List of the entries ordered by date or grouped by tags
+	* Optionally showing the tags.
+* The report generation should be invoked from Claude to allow AI features
+* It should be able to be invoked from AI such as Claude
+* The output should be a markdown file
+
+## Iteration 3: Attachments
+
 - **Attachments** — use the `read:` prefix and the skill's folder layout to
   let an entry carry a file (e.g. "read this PDF" plus the PDF stored
   alongside the entry).

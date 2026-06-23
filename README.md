@@ -176,11 +176,42 @@ bullet: found a pound coin on the pavement today
 → Date `2026-06-17`, entry `found a pound coin on the pavement today`,
 tag `luck` (suggested from your list).
 
+## Reporting
+
+Ask Claude for a report over a period and it builds a markdown summary from
+your stored entries:
+
+```
+monthly report
+report: last month grouped by tag
+summarise my journal for May 2026 as a blog, without tags
+```
+
+Claude reads the entries for the range from your store, writes an
+AI-generated summary grouped by tags, and assembles a markdown file: a header,
+the summary, then your entries (ordered by date, or grouped under tag
+headings).
+
+Defaults live in the `reporting` block of `config.json`; anything you say in
+the request overrides them for that run.
+
+| Option | Default | Override example |
+|--------|---------|------------------|
+| Date range | last complete month | "for May 2026", "1–15 June" |
+| `format` | `report` (structured list) | "as a blog" (prose-forward) |
+| `group_by` | `date` | "grouped by tag" |
+| `show_tags` | shown | "without tags" |
+| `summary` | included | "no summary" |
+| Title / output path | from templates in config | "title it 'June review'", "save to notes/june.md" |
+
+The output is a markdown file: written to `reports/` by default where Claude
+has filesystem access, otherwise returned for you to save.
+
 ## Roadmap
 
-Iteration 1 handles **text entries only**. Planned next:
+Iterations 1 (capture) and 2 (reporting) are built. Planned next:
 
-## Iteration 2: Reporting
+## Iteration 2: Reporting — built (see [Reporting](#reporting))
 
 Extract entries from the store and generate a monthly report or blog post from them.
   

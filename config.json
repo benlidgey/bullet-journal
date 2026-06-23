@@ -25,5 +25,14 @@
   "tagging": {
     "suggest_count": 2,
     "allow_new_tags": false
+  },
+
+  "reporting": {
+    "format": "report",
+    "group_by": "date",
+    "show_tags": true,
+    "summary": true,
+    "title_template": "Journal — {month_name} {year}",
+    "output_path_template": "reports/journal-{year}-{month}.md"
   }
 }

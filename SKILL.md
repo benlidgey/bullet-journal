@@ -1,6 +1,6 @@
 ---
 name: bullet-journal
-description: Records a sentence or short paragraph as a dated bullet journal entry in a central store. Use whenever the user wants to log, journal, note, jot, capture, or record a quick thought, observation, win, idea, or luck event — including phrases and prefixes like "journal this", "log this", "add a journal entry", "note this down", "jot this", "note:", "read:", "bullet:", or "bullet journal". Applies any tags the user supplies; if none are given, suggests tags from the configured list.
+description: Records a sentence or short paragraph as a dated bullet journal entry in a central store, and generates reports from past entries. Use whenever the user wants to log, journal, note, jot, capture, or record a quick thought, observation, win, idea, or luck event — including phrases and prefixes like "journal this", "log this", "add a journal entry", "note this down", "jot this", "note:", "read:", "bullet:", or "bullet journal". Also use when the user asks for a journal report or summary over a period — e.g. "monthly report", "journal report", "report:", "summarise my journal", "what did I journal last month". Applies any tags the user supplies; if none are given, suggests tags from the configured list.
 ---
 
 # Bullet Journal Skill
@@ -26,6 +26,9 @@ Always read `config.json` (next to this file) before acting. It defines:
   number with weak or loosely-relevant tags. Fewer is fine; zero is fine.
 - `tagging.allow_new_tags` — if `false`, the skill must never *invent* tags
   on its own; suggestions come only from `tags`.
+- `reporting` — default options for the reporting flow (see Reporting below):
+  `format`, `group_by`, `show_tags`, `summary`, `title_template`,
+  `output_path_template`. If absent, use the built-in defaults named there.
 
 ## Procedure
 
@@ -91,9 +94,73 @@ User: `bullet: bumped into an old colleague who offered to refer me`  *(no tags)
 - Tags: `luck`, `work` (suggested from the configured list, `suggest_count: 2`)
 - Action: add one row; tell the user these tags were suggested.
 
+## Reporting
+
+When the user asks for a journal report or summary over a period (see the
+trigger phrases in the description), generate a markdown report from past
+entries. This flow runs entirely in Claude (it reads the store and writes the
+summary); there is no separate script.
+
+### Resolve options
+
+Options are resolved in order, most specific wins:
+
+```
+built-in default  <  config.json "reporting" block  <  what the user asks for
+```
+
+| Option | Built-in default | Notes |
+|--------|------------------|-------|
+| date range | last complete month | Honour an explicit range in the request ("for May 2026", "1–15 June", "last week"). |
+| `format` | `report` | `report` = structured list with headings; `blog` = prose-forward, summary leads and runs longer, entries woven in or lightly listed. |
+| `group_by` | `date` | `date` = one date-ordered list; `tag` = entries under per-tag headings. |
+| `show_tags` | `true` | If `false`, omit the trailing `[tags]` on each entry. |
+| `summary` | `true` | If `false`, skip the AI summary paragraph. |
+| `title` | from `title_template` | `{month_name}`, `{month}` (01–12), `{year}` are substituted. |
+| output path | from `output_path_template` | Same substitutions. |
+
+### Procedure
+
+1. **Read `config.json`** — `storage` and the `reporting` defaults.
+2. **Resolve options** — defaults overlaid with anything explicit in the
+   request (table above).
+3. **Determine the date range** — default to the last complete calendar month.
+4. **Pull entries for the range from the store:**
+   - `slack`: read the channel's messages in range via the Slack connector;
+     parse each `YYYY-MM-DD — text [tags]` message into date, text, tags.
+   - `notion`: query rows where Date is in range.
+   - `file`: read the file and keep lines whose date is in range.
+5. **Write the AI summary** (skip if `summary` is `false`): a short paragraph
+   synthesising the period, grouped by tag — themes, not a restatement of
+   every entry.
+6. **Assemble the markdown:** the title header, then the summary, then the
+   entries — a single date-ordered list when `group_by` is `date`, or sections
+   under per-tag headings when `group_by` is `tag`. Show or hide tags per
+   `show_tags`.
+7. **Output the markdown file** to the resolved output path when a filesystem
+   is available. Where there is no writable path (e.g. the desktop/web app),
+   return the markdown for the user to save. Confirm what was produced and the
+   range covered.
+
+### Report example (`format: report`, `group_by: tag`)
+
+```markdown
+# Journal — June 2026
+
+A month mostly about shipping, with a couple of lucky breaks along the way.
+
+## work
+- 2026-06-03 — shipped the onboarding revamp [work]
+- 2026-06-18 — finished the skill build [work, learning]
+
+## luck
+- 2026-06-19 — found a pound coin on the pavement [luck]
+```
+
 ## Scope
 
-Iteration 1 handles **text entries only**.
+Iteration 1 handles **text entries only**. Iteration 2 adds **reporting**
+(above).
 
 **Future (not yet built):** the `read:` prefix and the folder layout are
 intended to let an entry carry an attachment (e.g. "read this PDF" plus the
